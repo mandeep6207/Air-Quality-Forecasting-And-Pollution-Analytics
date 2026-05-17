@@ -111,6 +111,19 @@ def safe_divide(a: float, b: float, default: float | None = None) -> float | Non
         return default
 
 
+def format_percentage(value: float, digits: int = 1) -> str:
+    """Format a ratio or percentage for display.
+
+    Examples:
+        >>> format_percentage(0.1234)
+        '12.3%'
+    """
+    try:
+        return f"{round(float(value) * 100, digits):.{digits}f}%"
+    except Exception:
+        return "N/A"
+
+
 def timed(logger_name: str = "utils"):
     """Decorator to log execution time of a function under the given logger name.
 
