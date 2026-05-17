@@ -34,6 +34,12 @@ logger = get_logger("pipeline")
 
 
 def main() -> None:
+    """Execute the full data pipeline end-to-end.
+
+    The function runs preprocessing, feature engineering, EDA, model training,
+    evaluation and report generation. It logs progress and writes outputs to
+    the repository `data/`, `models/`, `visuals/`, and `reports/` folders.
+    """
     start = time.time()
     logger.info("=" * 60)
     logger.info("  Air Quality Forecasting — Full Pipeline")
