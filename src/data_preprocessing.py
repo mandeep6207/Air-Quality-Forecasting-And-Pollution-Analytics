@@ -35,7 +35,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from utils import get_logger, ensure_dir, project_root
+from utils import get_logger, ensure_dir, project_root, save_json
 
 logger = get_logger(__name__)
 
@@ -141,6 +141,15 @@ def preprocess(
     ensure_dir(clean_path.parent)
     df.to_csv(clean_path, index=False)
     logger.info("Cleaned dataset saved to %s  (shape: %s)", clean_path, df.shape)
+
+    # Also persist a tiny metadata file describing the cleaned export (useful
+    # for downstream reporting and quick checks without loading the full CSV).
+    meta = {
+        "clean_path": str(clean_path),
+        "rows": int(df.shape[0]),
+        "cols": int(df.shape[1]),
+    }
+    save_json(meta, project_root() / "reports" / "cleaned_metadata.json")
     return df
 
 
