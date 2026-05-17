@@ -135,9 +135,12 @@ def plot_confusion_matrix(
     ax.set_title("Confusion Matrix – AQI Bucket Classifier", fontweight="bold", pad=12)
 
     thresh = cm_arr.max() / 2.0
+    total = cm_arr.sum()
     for i in range(n):
         for j in range(n):
-            ax.text(j, i, str(cm_arr[i, j]),
+            val = int(cm_arr[i, j])
+            pct = (val / total * 100.0) if total > 0 else 0.0
+            ax.text(j, i, f"{val}\n({pct:.1f}%)",
                     ha="center", va="center",
                     color="white" if cm_arr[i, j] > thresh else "black",
                     fontsize=9)
