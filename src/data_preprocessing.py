@@ -72,13 +72,19 @@ def drop_missing_targets(df: pd.DataFrame) -> pd.DataFrame:
 
 def impute_numeric_medians(df: pd.DataFrame) -> pd.DataFrame:
     """Fill missing numeric values with column medians."""
-    numeric_cols = df.select_dtypes(include="number").columns.tolist()
+    # Restrict imputation to known pollutant numeric columns to avoid
+    # unexpectedly overwriting unrelated numeric fields (e.g., IDs).
+    numeric_cols = [c for c in POLLUTANT_COLS if c in df.columns]
+    if not numeric_cols:
+        logger.warning("No pollutant numeric columns found for imputation; skipping.")
+        return df
+
     missing_before = df[numeric_cols].isna().sum().sum()
     medians = df[numeric_cols].median()
     df[numeric_cols] = df[numeric_cols].fillna(medians)
     missing_after = df[numeric_cols].isna().sum().sum()
     logger.info(
-        "Imputed %d missing numeric values with column medians (remaining: %d)",
+        "Imputed %d missing pollutant values using medians (remaining: %d)",
         missing_before - missing_after,
         missing_after,
     )
