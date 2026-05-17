@@ -168,7 +168,12 @@ def plot_monthly_trends(df: pd.DataFrame) -> None:
     ax.plot(monthly.index, monthly.values, marker="o", linewidth=2.5,
             color="#e74c3c", markersize=7, markerfacecolor="white",
             markeredgewidth=2)
-    ax.fill_between(monthly.index, monthly.values, alpha=0.15, color="#e74c3c")
+        # Add a lightly smoothed trend (rolling mean) to highlight seasonality
+        monthly_smoothed = monthly.rolling(window=3, center=True, min_periods=1).mean()
+        ax.plot(monthly_smoothed.index, monthly_smoothed.values, color="#c0392b",
+            linewidth=2, linestyle="--", label="3-month smooth")
+        ax.fill_between(monthly.index, monthly.values, alpha=0.12, color="#e74c3c")
+        ax.legend()
     ax.set_xticks(range(1, 13))
     ax.set_xticklabels(month_labels)
     ax.set_xlabel("Month")
