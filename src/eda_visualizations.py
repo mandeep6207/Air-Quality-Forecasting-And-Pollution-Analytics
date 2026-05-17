@@ -117,8 +117,10 @@ def plot_correlation_heatmap(df: pd.DataFrame) -> None:
     for i in range(n):
         for j in range(n):
             val = corr.values[i, j]
+            # Use a slightly lower threshold for white text to improve
+            # readability on moderately strong correlations.
             ax.text(j, i, f"{val:.2f}", ha="center", va="center",
-                    fontsize=7, color="white" if abs(val) > 0.6 else "black")
+                    fontsize=7, color="white" if abs(val) > 0.5 else "black")
 
     fig.tight_layout()
     save_figure(fig, VISUALS_DIR / "correlation_heatmap.png")
