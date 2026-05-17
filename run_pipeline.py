@@ -52,7 +52,8 @@ def main() -> None:
     # ── Step 3: EDA Visualizations ────────────────────────────────────────────
     logger.info("\n[3/7] EDA Visualizations")
     from eda_visualizations import run_eda
-    run_eda()
+        # Use the cleaned dataframe path we just produced to avoid ambiguity.
+        run_eda(clean_path=ROOT / "data" / "cleaned_air_quality.csv")
 
     # ── Step 4: Regression Training ───────────────────────────────────────────
     logger.info("\n[4/7] Regression Model Training")
@@ -107,6 +108,14 @@ def main() -> None:
     logger.info("  Models        → models/")
     logger.info("  Visuals       → visuals/")
     logger.info("  Reports       → reports/")
+
+    if __name__ == "__main__":
+        try:
+            main()
+        except Exception as exc:
+            logger = get_logger("pipeline")
+            logger.exception("Pipeline failed: %s", exc)
+            raise
 
 
 if __name__ == "__main__":
