@@ -1,16 +1,25 @@
 """
 data_preprocessing.py
 ---------------------
-Loads, cleans, and saves the raw air-quality dataset.
+Small, well-documented preprocessing utilities for the project.
 
-Steps
------
-1. Load data/city_day.csv
-2. Parse Date column as datetime
-3. Drop rows where AQI or AQI_Bucket is missing
-4. Impute remaining numeric NaNs with column medians
-5. Remove duplicate rows
-6. Save cleaned file to data/cleaned_air_quality.csv
+This module provides a compact, reproducible preprocessing pipeline used by
+the project's notebook and pipeline runner. It focuses on defensive data
+handling and produces a clean CSV suitable for feature engineering and
+training. The functions are small and testable, and log helpful diagnostic
+messages about rows removed and values imputed.
+
+Key steps performed by ``preprocess()``:
+- Load the raw CSV and parse the ``Date`` column as datetime
+- Drop rows missing target values (``AQI`` or ``AQI_Bucket``)
+- Impute numeric columns using column medians (no inplace surprises)
+- Remove exact duplicate rows
+- Persist the cleaned CSV to a stable location
+
+The pipeline is intentionally conservative: imputation uses medians to avoid
+introducing bias from extreme values, and duplicate removal only drops exact
+row copies. These choices make the output predictable and robust for
+downstream modelling.
 """
 
 from pathlib import Path
@@ -95,6 +104,20 @@ def preprocess(
     pd.DataFrame
         Cleaned dataframe.
     """
+    # Notes
+    # -----
+    # - The function writes `clean_path` with `index=False` to keep the CSV
+    #   portable and avoid leaking dataframe indices into downstream steps.
+    # - Only numeric columns are imputed (non-numeric columns are left intact).
+    # - This function is safe to call multiple times; it will overwrite the
+    #   cleaned CSV each run and log actions taken.
+    #
+    # Example
+    # -------
+    # >>> from pathlib import Path
+    # >>> df = preprocess(raw_path=Path('data/city_day.csv'))
+    # >>> df.shape
+    # (29531, 25)
     df = load_raw_data(raw_path)
     df = drop_missing_targets(df)
     df = impute_numeric_medians(df)

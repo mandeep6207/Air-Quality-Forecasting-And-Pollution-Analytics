@@ -97,3 +97,38 @@ def set_plot_style() -> None:
 def rmse(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     """Return Root Mean Squared Error."""
     return float(np.sqrt(np.mean((np.asarray(y_true) - np.asarray(y_pred)) ** 2)))
+
+
+def safe_divide(a: float, b: float, default: float | None = None) -> float | None:
+    """Safely divide two numbers, returning ``default`` on error (e.g., division by zero).
+
+    Useful to avoid exceptions in aggregation pipelines where a missing or zero
+    denominator might otherwise interrupt processing.
+    """
+    try:
+        return a / b
+    except Exception:
+        return default
+
+
+def timed(logger_name: str = "utils"):
+    """Decorator to log execution time of a function under the given logger name.
+
+    Example:
+        @timed('train')
+        def train_model(...):
+            ...
+    """
+
+    def _decorator(func):
+        def _wrapped(*args, **kwargs):
+            log = get_logger(logger_name)
+            start = __import__('time').time()
+            result = func(*args, **kwargs)
+            elapsed = __import__('time').time() - start
+            log.info("%s completed in %.2fs", func.__name__, elapsed)
+            return result
+
+        return _wrapped
+
+    return _decorator

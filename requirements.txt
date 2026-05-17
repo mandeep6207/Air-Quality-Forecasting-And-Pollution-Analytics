@@ -1,8 +1,8 @@
-pandas==2.2.2
-numpy==1.26.4
-matplotlib==3.8.4
-scikit-learn==1.4.2
-joblib==1.4.2
-notebook==7.2.0
-ipykernel==6.29.4
-seaborn==0.13.2
+pandas>=2.2.2,<2.3.0
+numpy>=1.26.4,<1.27.0
+matplotlib>=3.8.4,<3.9.0
+scikit-learn>=1.4.2,<1.5.0
+joblib>=1.4.2,<1.5.0
+notebook>=7.2.0,<7.3.0
+ipykernel>=6.29.4,<7.0.0
+seaborn>=0.13.2,<0.14.0
