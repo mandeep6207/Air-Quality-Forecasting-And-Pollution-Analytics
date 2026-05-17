@@ -31,6 +31,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.pipeline import Pipeline
+import time
 
 from utils import get_logger, ensure_dir, project_root, rmse
 
@@ -126,11 +127,14 @@ def train_regression(
             ("scaler", StandardScaler()),
             ("model", estimator),
         ])
+        t0 = time.time()
         pipe.fit(X_train, y_train)
+        elapsed = time.time() - t0
         metrics = evaluate_regressor(pipe, X_test, y_test)
         results[name] = metrics
         fitted_models[name] = pipe
-        logger.info("  %s → MAE=%.4f  RMSE=%.4f  R²=%.4f", name, metrics["MAE"], metrics["RMSE"], metrics["R2"])
+        logger.info("  %s → MAE=%.4f  RMSE=%.4f  R²=%.4f  (train_time=%.1fs)",
+                    name, metrics["MAE"], metrics["RMSE"], metrics["R2"], elapsed)
 
     # Select best by R²
     best_name = max(results, key=lambda n: results[n]["R2"])
