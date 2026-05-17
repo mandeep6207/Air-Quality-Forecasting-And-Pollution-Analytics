@@ -38,6 +38,7 @@ from sklearn.metrics import (
     confusion_matrix,
 )
 from sklearn.pipeline import Pipeline
+import time
 
 from utils import get_logger, ensure_dir, project_root
 
@@ -129,7 +130,9 @@ def train_classification(
             ("scaler", StandardScaler()),
             ("model", estimator),
         ])
+        t0 = time.time()
         pipe.fit(X_train, y_train)
+        elapsed = time.time() - t0
         metrics = evaluate_classifier(pipe, X_test, y_test)
         results[name] = metrics
         fitted_models[name] = pipe
@@ -138,6 +141,7 @@ def train_classification(
             name, metrics["Accuracy"], metrics["Precision"],
             metrics["Recall"], metrics["F1_Score"],
         )
+        logger.info("  %s training time: %.1fs", name, elapsed)
 
     # Select best by F1
     best_name = max(results, key=lambda n: results[n]["F1_Score"])
