@@ -197,6 +197,9 @@ jupyter notebook notebooks/air_quality_analysis.ipynb
 
 ---
 
+**Note:** The summary values above are illustrative summaries from quick experiments. For exact, reproducible metrics run `python run_pipeline.py` and inspect `reports/model_metrics.json` (a `generated_at` timestamp is included).
+
+
 ## 🔮 Future Work
 
 - **Time-series forecasting** — LSTM / Prophet for sequential AQI prediction
