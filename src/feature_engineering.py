@@ -32,7 +32,7 @@ POLLUTANT_COLS = [
     "Benzene", "Toluene", "Xylene",
 ]
 
-TEMPORAL_COLS = ["Year", "Month", "Day", "DayOfWeek", "Quarter"]
+TEMPORAL_COLS = ["Year", "Month", "Day", "DayOfWeek", "Quarter", "DayOfYear", "IsWeekend"]
 
 FEATURE_COLS = POLLUTANT_COLS + TEMPORAL_COLS + ["City_Encoded"]
 
@@ -50,6 +50,9 @@ def add_temporal_features(df: pd.DataFrame) -> pd.DataFrame:
     df["Day"] = df["Date"].dt.day
     df["DayOfWeek"] = df["Date"].dt.dayofweek   # 0 = Monday
     df["Quarter"] = df["Date"].dt.quarter
+    # Additional temporal signals for stronger seasonality capture
+    df["DayOfYear"] = df["Date"].dt.dayofyear
+    df["IsWeekend"] = df["Date"].dt.dayofweek >= 5
     logger.info("Temporal features added: %s", TEMPORAL_COLS)
     return df
 
