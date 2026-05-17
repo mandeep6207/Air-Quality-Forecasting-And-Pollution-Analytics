@@ -66,8 +66,12 @@ def plot_feature_importance(
     ax.set_title(title, fontweight="bold", pad=12)
     ax.xaxis.set_major_formatter(mticker.FormatStrFormatter("%.3f"))
     for bar, val in zip(bars, top_values[::-1]):
+    # Show absolute importance and percentage of the top-N total for clarity
+    total = float(top_values.sum() if top_values.sum() != 0 else 1.0)
+    for bar, val in zip(bars, top_values[::-1]):
+        pct = (val / total) * 100.0
         ax.text(val + 0.001, bar.get_y() + bar.get_height() / 2,
-                f"{val:.4f}", va="center", fontsize=9)
+                f"{val:.4f} ({pct:.1f}%)", va="center", fontsize=9)
     fig.tight_layout()
     save_figure(fig, filepath)
     logger.info("Saved feature importance plot → %s", filepath)
