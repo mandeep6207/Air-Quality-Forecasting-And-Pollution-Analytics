@@ -295,6 +295,7 @@ Key insights from EDA:
 3. **Temporal features** (Month, Quarter) add meaningful signal — winter months drive higher AQI.
 4. **City identity** is a strong predictor, reflecting persistent geographic and industrial differences.
 5. The classifier achieves high F1 on extreme categories (Good / Severe) but shows some confusion between adjacent buckets (Moderate ↔ Poor).
+6. **Model stability** — relative performance of tree-based models is consistent across random seeds in quick checks; consider larger cross-validation for production readiness.
 
 ---
 
