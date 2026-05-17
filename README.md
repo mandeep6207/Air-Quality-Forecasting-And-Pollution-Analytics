@@ -219,17 +219,3 @@ jupyter notebook notebooks/air_quality_analysis.ipynb
 | scikit-learn | ML models & pipelines |
 | joblib | Model serialisation |
 | Jupyter | Interactive analysis |
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License**.
-
----
-
-## 👤 Author
-
-**Mandeep Kumar**
-- GitHub: [@mandeep6207](https://github.com/mandeep6207)
-- Email: mk6207114453@gmail.com
