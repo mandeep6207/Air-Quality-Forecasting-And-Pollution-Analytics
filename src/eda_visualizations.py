@@ -144,10 +144,11 @@ def plot_top_polluted_cities(df: pd.DataFrame, top_n: int = 15) -> None:
 
     for bar, val in zip(bars, city_aqi.values[::-1]):
         ax.text(val + 2, bar.get_y() + bar.get_height() / 2,
-                f"{val:.1f}", va="center", fontsize=9)
+            f"{val:,.1f}", va="center", fontsize=9)
 
     ax.set_xlabel("Mean AQI")
     ax.set_title(f"Top {top_n} Most Polluted Cities (Mean AQI)", fontweight="bold", pad=12)
+        ax.grid(axis="x", linestyle="--", alpha=0.4)
     fig.tight_layout()
     save_figure(fig, VISUALS_DIR / "top_polluted_cities.png")
     logger.info("Saved top_polluted_cities.png")
