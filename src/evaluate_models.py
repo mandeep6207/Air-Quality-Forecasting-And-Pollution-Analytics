@@ -23,6 +23,7 @@ from utils import (
     get_logger, save_figure, save_json, set_plot_style,
     project_root, ensure_dir,
 )
+from datetime import datetime
 
 logger = get_logger(__name__)
 
@@ -159,6 +160,7 @@ def save_metrics(
 ) -> None:
     """Persist all model metrics to reports/model_metrics.json."""
     payload: Dict[str, Any] = {
+        "generated_at": datetime.utcnow().isoformat() + "Z",
         "regression": {
             "models": reg_results,
             "best_model": best_reg,
