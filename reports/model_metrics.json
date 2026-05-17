@@ -1,0 +1,56 @@
+{
+    "regression": {
+        "models": {
+            "Linear Regression": {
+                "MAE": 30.9888,
+                "RMSE": 59.2599,
+                "R2": 0.8082
+            },
+            "Random Forest Regressor": {
+                "MAE": 20.7132,
+                "RMSE": 40.6391,
+                "R2": 0.9098
+            },
+            "Gradient Boosting Regressor": {
+                "MAE": 20.9055,
+                "RMSE": 39.6147,
+                "R2": 0.9143
+            }
+        },
+        "best_model": "Gradient Boosting Regressor",
+        "best_metrics": {
+            "MAE": 20.9055,
+            "RMSE": 39.6147,
+            "R2": 0.9143
+        }
+    },
+    "classification": {
+        "models": {
+            "Logistic Regression": {
+                "Accuracy": 0.7531,
+                "Precision": 0.7509,
+                "Recall": 0.7531,
+                "F1_Score": 0.7456
+            },
+            "Random Forest Classifier": {
+                "Accuracy": 0.8165,
+                "Precision": 0.8159,
+                "Recall": 0.8165,
+                "F1_Score": 0.8143
+            },
+            "Gradient Boosting Classifier": {
+                "Accuracy": 0.807,
+                "Precision": 0.8059,
+                "Recall": 0.807,
+                "F1_Score": 0.8062
+            }
+        },
+        "best_model": "Random Forest Classifier",
+        "best_metrics": {
+            "Accuracy": 0.8165,
+            "Precision": 0.8159,
+            "Recall": 0.8165,
+            "F1_Score": 0.8143
+        }
+    }
+}
