@@ -82,6 +82,13 @@ def plot_aqi_distribution(df: pd.DataFrame) -> None:
     ax.set_ylabel("Frequency")
     ax.set_title("Distribution of Air Quality Index (AQI)", fontweight="bold", pad=12)
 
+    # Slight x-axis padding for aesthetics
+    try:
+        x_min, x_max = aqi_vals.min(), aqi_vals.max()
+        ax.set_xlim(max(0, x_min - 5), x_max + 5)
+    except Exception:
+        pass
+
     lines1, labels1 = ax.get_legend_handles_labels()
     lines2, labels2 = ax2.get_legend_handles_labels()
     ax.legend(lines1 + lines2, labels1 + labels2, loc="upper right")
