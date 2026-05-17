@@ -16,10 +16,19 @@ Key steps performed by ``preprocess()``:
 - Remove exact duplicate rows
 - Persist the cleaned CSV to a stable location
 
+I/O
+---
+- Input: the raw CSV located at ``data/city_day.csv`` by default.
+- Output: cleaned CSV written to ``data/cleaned_air_quality.csv`` (overwrites).
+- Side outputs: none by default; callers may persist metadata separately.
+
+Design notes
+------------
 The pipeline is intentionally conservative: imputation uses medians to avoid
 introducing bias from extreme values, and duplicate removal only drops exact
 row copies. These choices make the output predictable and robust for
 downstream modelling.
+
 """
 
 from pathlib import Path
